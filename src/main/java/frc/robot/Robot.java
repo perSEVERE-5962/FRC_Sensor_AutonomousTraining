@@ -11,6 +11,7 @@ import frc.robot.commands.RunAutonomous;
 import frc.robot.commands.RunJoystickTank;
 import frc.robot.sensors.RobotEncoder;
 import frc.robot.sensors.RobotGyro;
+import frc.robot.sensors.*;
 import frc.robot.sensors.RobotUltrasonicAnalog;
 import frc.robot.subsystems.Drive;
 
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static RobotEncoder encoder = new RobotEncoder();
     public static AutoExecute auto_execute = new AutoExecute();
 	
+	public static PidControl pidValue = new PidControl();
 	public static Command autonomousCommand;
 
 	/**

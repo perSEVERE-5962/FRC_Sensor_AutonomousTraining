@@ -69,7 +69,8 @@ public class RobotMap {
 		robotLeftVictor.setInverted(true);
 		robotRightTalon.set(0.375);
 		robotRightVictor.follow(robotRightTalon);
-	
+		
+		Robot.pidValue.configTalons();
 		
 		// leftDrive = new MultiSpeedController(robotLeftVictor1, robotLeftVictor2);
 		// rightDrive = new MultiSpeedController(robotRightVictor1, robotRightVictor2);

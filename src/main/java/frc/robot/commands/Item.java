@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Autonomous;
@@ -14,6 +16,25 @@ public class Item {
 	private long startSystemTime = -1;
 	private double adjustedTurningValue;
 	private boolean isLeft = true;
+
+	final double diameter = 7.5;//3.0 actual bot
+    final double circumferance = Math.PI*diameter;
+    final double ticksPerRotation = 4096;
+
+	// private double ToInch(double units) {
+	// 	double deg = units * 360.0 / 4096.0;
+
+	// 	/* truncate to 0.1 res */
+	// 	deg *= 10;
+	// 	deg = (int) deg;
+	// 	deg /= 10;
+	// 	double inchConversion = (deg/360)*circumferance;
+		
+	// 	return inchConversion;
+    // }
+    private double getTicks(double inches) {
+        return (inches*(4096.0/circumferance));
+    }
 	
 	public Item(double speed, int turningValue, Autonomous.sensorType sensorType, int sensorValue) {
 		init(speed,turningValue,sensorType,sensorValue);
@@ -87,17 +108,9 @@ public class Item {
 	
 	private void driveEncoders(double value) {
 		if (value < sensorValue) {
-			if (speed > 0 && turningValue == 0) {
-				double angle = getGyroAngle();
-				adjustedTurningValue = 0.03 * angle;
-			}
-			if (speed < 0 && turningValue == 0) {
-				double angle = getGyroAngle();
-				adjustedTurningValue = 0.03 * -angle;
-			}
-			RobotMap.myRobot.drive(-speed, adjustedTurningValue);
+			RobotMap.robotLeftTalon.set(ControlMode.Position, getTicks(value));
+			RobotMap.robotRightTalon.set(ControlMode.Position, getTicks(value));
 		} else {
-			RobotMap.myRobot.drive(0, 0);
 			Robot.encoder.reset();
 			Robot.gyro.resetGyro();
 			complete = true;
@@ -105,8 +118,10 @@ public class Item {
 	}
 	
 	private void driveUltrasonic(double value) {
-		RobotMap.myRobot.setMaxOutput(0.25);
 		if (value > sensorValue) {
+			RobotMap.robotLeftTalon.set(ControlMode.PercentOutput, 0.5);
+			RobotMap.robotLeftTalon.set(ControlMode.PercentOutput, 0.5);
+
 			if (speed > 0 && turningValue == 0) {
 				double angle = getGyroAngle();
 				adjustedTurningValue = 0.03 * angle;

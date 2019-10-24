@@ -14,7 +14,7 @@ public class RunAutonomous extends Command {
 	protected void initialize() {
 		index = 0;
 		Robot.gyro.resetGyro();
-		RobotMap.myRobot.setMaxOutput(0.5);
+		//RobotMap.myRobot.setMaxOutput(0.5);
 		Robot.auto_execute.execute();
 	}
 
@@ -22,13 +22,13 @@ public class RunAutonomous extends Command {
 		if (index < commands.size()) {
 			Item item = commands.get(index);
 			if (item.isComplete()) {
-				RobotMap.myRobot.drive(0, 0);
+				//RobotMap.myRobot.drive(0, 0);
 				index++;
 			} else {
 				item.execute();
 			}
 		} else {
-			RobotMap.myRobot.drive(0, 0);
+			//RobotMap.myRobot.drive(0, 0);
 		}
 	}
 
