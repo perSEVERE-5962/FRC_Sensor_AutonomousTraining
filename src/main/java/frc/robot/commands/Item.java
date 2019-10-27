@@ -122,20 +122,21 @@ public class Item {
 			RobotMap.robotLeftTalon.set(ControlMode.PercentOutput, 0.5);
 			RobotMap.robotLeftTalon.set(ControlMode.PercentOutput, 0.5);
 
-			if (speed > 0 && turningValue == 0) {
-				double angle = getGyroAngle();
-				adjustedTurningValue = 0.03 * angle;
-			}
-			if (speed < 0 && turningValue == 0) {
-				double angle = getGyroAngle();
-				adjustedTurningValue = 0.03 * -angle;
-			}
-			RobotMap.myRobot.drive(-speed, adjustedTurningValue);
+			// if (speed > 0 && turningValue == 0) {
+			// 	double angle = getGyroAngle();
+			// 	adjustedTurningValue = 0.03 * angle;
+			// }
+			// if (speed < 0 && turningValue == 0) {
+			// 	double angle = getGyroAngle();
+			// 	adjustedTurningValue = 0.03 * -angle;
+			// }
+			// RobotMap.myRobot.drive(-speed, adjustedTurningValue);
 		} else {
-			RobotMap.myRobot.setMaxOutput(1);
-			RobotMap.myRobot.drive(0, 0);
-			Robot.encoder.reset();
-			Robot.gyro.resetGyro();
+			// RobotMap.myRobot.setMaxOutput(1);
+			// RobotMap.myRobot.drive(0, 0);
+			// Robot.encoder.reset();
+			// Robot.gyro.resetGyro();
+			RobotMap.robotLeftTalon.set(ControlMode.PercentOutput, 0);
 			complete = true;
 		}		
 	}
